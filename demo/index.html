@@ -18,8 +18,8 @@
 <body>
 
 	<p>
-	The following two file manager instances are backended to the same filesystem. This means when one
-	is changed, the other is, in effect, changed. <a href="https://github.com/mwri/lostofs">LOSTOFS</a>
+	These file manager instances are backended to the same filesystem. This means when one
+	is changed, the others are, in effect, changed. <a href="https://github.com/mwri/lostofs">LOSTOFS</a>
 	is an event emitter, and <a href="https://github.com/mwri/jquery.lostofsfileman">LOSTOFSFILEMAN</a>
 	uses events to ensure the GUI is kept up to date.
 	</p>
@@ -27,6 +27,7 @@
 	<p>
 	<div id="lostofs_fileman"></div>
 	<div id="lostofs_fileman2"></div>
+	<div id="lostofs_fileman3"></div>
 	</p>
 
 </body>
@@ -38,7 +39,15 @@
 	let fs = new lostofs_fs({unformatted:'format'});
 
 	$('#lostofs_fileman').lostofsfileman({fs:fs,menu_shform:true,dir:'/'});
-	$('#lostofs_fileman2').lostofsfileman({fs:fs,menu_shform:true});
+
+	$('#lostofs_fileman2').lostofsfileman({fs:fs});
+
+	$('#lostofs_fileman3').lostofsfileman({
+		fs:   fs,
+		menu: [
+			{ label: 'Ping', callback: function () { alert('PONG'); } },
+			],
+	});
 
 </script>
 

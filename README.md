@@ -38,6 +38,20 @@ dir         | set the directory displayed (default is /, the root)
 menu_shform | default false, adds a 'format' option to the file manager menu if true
 no_header   | default is false, removes the header (with the current dir) if true
 single_dir  | default is false, removes . and .. and 'make directory' from the menu
+menu        | default is none, but if an array is given, add extra options to the context menu
+
+When using `menu`, menu items must be as per
+[jquery.easymenu](https://github.com/mwri/jquery.easymenu), for example the
+following would add a 'Ping' menu option to the bottom of the filemanagers
+context menu:
+
+```js
+$('#some_div').lostofsfileman({
+    fs: fs,
+    menu: [
+		{ label: 'Ping', callback: function () { alert('pong'); } }
+	]});
+```
 
 ## Build
 
