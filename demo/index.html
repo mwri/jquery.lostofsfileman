@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+
+	<script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="lib/jquery.easymenu/dist/jquery.easymenu.js"></script>
+	<link href="lib/jquery.easymenu/dist/jquery.easymenu.css" rel="stylesheet">
+	<script type="text/javascript" src="lib/jquery.lostofsfileman/dist/jquery.lostofsfileman.js"></script>
+	<link href="lib/jquery.lostofsfileman/dist/jquery.lostofsfileman.css" rel="stylesheet">
+
+	<script type="text/javascript" src="lostofs_webpack_bundle.js" charset="utf-8"></script>
+
+</head>
+
+<body>
+
+	<p>
+	The following two file manager instances are backended to the same filesystem. This means when one
+	is changed, the other is, in effect, changed. <a href="https://github.com/mwri/lostofs">LOSTOFS</a>
+	is an event emitter, and <a href="https://github.com/mwri/jquery.lostofsfileman">LOSTOFSFILEMAN</a>
+	uses events to ensure the GUI is kept up to date.
+	</p>
+
+	<p>
+	<div id="lostofs_fileman"></div>
+	<div id="lostofs_fileman2"></div>
+	</p>
+
+</body>
+
+<script>
+
+	let lostofs_fs = lostofs.fs;
+
+	let fs = new lostofs_fs({unformatted:'format'});
+
+	$('#lostofs_fileman').lostofsfileman({fs:fs,menu_shform:true,dir:'/'});
+	$('#lostofs_fileman2').lostofsfileman({fs:fs,menu_shform:true});
+
+</script>
+
+</html>
