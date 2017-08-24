@@ -37,6 +37,7 @@ Parameter   | Description
 dir         | set the directory displayed (default is /, the root)
 menu_shform | default false, adds a 'format' option to the file manager menu if true
 no_header   | default is false, removes the header (with the current dir) if true
+single_dir  | default is false, removes . and .. and 'make directory' from the menu
 
 ## Build
 
