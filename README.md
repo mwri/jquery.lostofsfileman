@@ -17,6 +17,8 @@ your own webpack or browserify bundle.
 
 ## Usage
 
+### Constructor
+
 A [LOSTOFS](https://github.com/mwri/lostofs) filesystem object must be
 passed to the jquery.lostofsfileman object, which is just an interface
 to the filesystem.
@@ -39,18 +41,70 @@ menu_shform | default false, adds a 'format' option to the file manager menu if 
 no_header   | default is false, removes the header (with the current dir) if true
 single_dir  | default is false, removes . and .. and 'make directory' from the menu
 menu        | default is none, but if an array is given, add extra options to the context menu
+file_choose | replaces the file selection function, see below
 
-When using `menu`, menu items must be as per
+When using **menu**, menu items must be as per
 [jquery.easymenu](https://github.com/mwri/jquery.easymenu), for example the
 following would add a 'Ping' menu option to the bottom of the filemanagers
 context menu:
 
 ```js
-$('#some_div').lostofsfileman({
+let fm = $('#some_div').lostofsfileman({
     fs: fs,
     menu: [
 		{ label: 'Ping', callback: function () { alert('pong'); } }
 	]});
+```
+
+When using **file_choose** the default file selection action function is
+replaced. The default is usually to download the file, but when integrated
+as part of a web app it may be required to select the file for the app
+instead. The function provided will be invoked when a file is double clicked
+and the file/entity provided as a parameter:
+
+```js
+let fm = $('#some_div').lostofsfileman({
+    fs: fs,
+    file_choose: function (ent) { console.log('choose inode '+ent.inode()); },
+	});
+```
+
+### Other API calls
+
+#### new_file
+
+```js
+fm.lostofsfileman('new_file', 'new_file.txt');
+```
+
+Creates a new file in the currently displayed directory. Optionally
+the file content may be given as a third parameter.
+
+A promise is returned which resolves to the new file/entity when the
+file manager has rerendered.
+
+#### rename
+
+Call to rename a file in the currently displayed directory.
+
+```js
+fm.lostofsfileman('rename', 'some_file.txt');
+```
+
+There is no replacement filename, this initiates a rename in the
+filemanager, i.e. the filename becomes editable and focused.
+
+#### rendered
+
+When an event causes the GUI to be rerendered, a promise is created
+during the render (since the render is based on asynchronous access
+to a filesystem). This API call returns the promise.
+
+```js
+do_thing_that_causes_update(fm);
+fm.lostofsfileman('rendered').then(function () {
+	do_thing_that_requires_uptodate_render();
+});
 ```
 
 ## Build
