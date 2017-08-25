@@ -1,4 +1,4 @@
-// Package: jquery.lostofsfileman v1.0.0 (built 2017-08-24 08:46:40)
+// Package: jquery.lostofsfileman v1.0.1 (built 2017-08-25 19:46:56)
 // Copyright: (C) 2017 Michael Wright <mjw@methodanalysis.com>
 // License: MIT
 
@@ -50,10 +50,22 @@
 			if (dir_path === undefined)
 				dir_path = '/';
 
+			let single_dir = typeof params.single_dir !== 'undefined'
+				? params.single_dir
+				: false;
+
+			let show_hdr = typeof params.no_header !== 'undefined'
+				? !params.no_header
+				: single_dir ? false : true;
+
 			data = {
 				fs:          fs,
 				dir_path:    dir_path,
 				menu_shform: params.menu_shform || false,
+				show_hdr:    show_hdr,
+				single_dir:  single_dir,
+				menu_extra:  typeof params.menu !== 'undefined' ? params.menu : [],
+				file_choose: params.file_choose,
 				};
 			
 			jQuery.data(this, 'lostofsfileman', data);
@@ -95,6 +107,32 @@
 
 		},
 
+		rendered: function (data) {
+
+			return data.render_prom;
+
+		},
+
+		rename: function (data, name) {
+
+			start_rename(this.find('.lsfsfm_ent[data-entname="'+name+'"]'));
+
+		},
+
+		new_file: function (data, name, content) {
+
+			return data.fs.get(data.dir_path).then(function (cur_dir) {
+				if (typeof content === 'undefined')
+					content = '';
+				return cur_dir.mkfile(name, content).then(function (new_file) {
+					return data.render_prom.then(function () {
+						return new_file;
+					});
+				});
+			});
+
+		},
+
 	};
 
 
@@ -121,7 +159,7 @@
 				let dir_container = $('<div class="lsfsfm_dir_container" data-dir-path="'+dir_path+'"/>');
 				dir_div.append(dir_container);
 
-				if (!params.no_header) {
+				if (data.show_hdr) {
 					let dir_hdr = $('<div class="lsfsfm_dir_hdr">Location: '+dir_path+'</div>');
 					dir_container.append(dir_hdr);
 				}
@@ -173,12 +211,14 @@
 				});
 
 				for (let i = 0; i < ent_ls.length; i++) {
+					if (data.single_dir && (ent_ls[i][0] === '.' || ent_ls[i][0] === '..'))
+						continue;
 					let ent_name = ent_ls[i][0];
 					let ent = ent_ls[i][1];
 					let icon_class = ent.type() === 'dir' ? 'lsfsfm_dir_icon' : 'lsfsfm_ent_icon';
 					if (ent.type() === 'file' && ent.mime_type() !== undefined)
 						icon_class += ' lsfsfm_'+ent.mime_type().replace(/[\/-]/g, '_');
-					let tr = $('<tr class="lsfsfm_ent" draggable="true" data-inode="'+ent.inode()+'"/>');
+					let tr = $('<tr class="lsfsfm_ent" draggable="true" data-inode="'+ent.inode()+'" data-entname="'+ent_name+'"/>');
 					tbody.append(tr);
 					let td1 = $('<td/>');
 					tr.append(td1);
@@ -220,7 +260,10 @@
 								tr = tr.parentElement;
 							}
 							cur_dir.get($(a).attr('download')).then(function (ent) {
-								data_download(a.get(0), ent, $(a).attr('download'));
+								if (typeof data.file_choose === 'undefined')
+									data_download(a.get(0), ent, $(a).attr('download'));
+								else
+									data.file_choose(ent);
 								return true;
 							}).catch(function (err) {
 								console.log(err);
@@ -327,21 +370,23 @@
 	function create_menu (this_jqo, data, menu, fs, cur_dir, file_input, ent_name, ent, tr) {
 
 		let menu_items = [];
-		menu_items.push(
-			{ label: 'New directory',
-				title: 'Create a new directory',
-				callback: function () {
-						cur_dir.mkdir('New directory', {free_name: true}).then(function (new_dir) {
-							return data.render_prom.then(function () {
-								start_rename(this_jqo.find('.lsfsfm_ent[data-inode="'+new_dir.inode()+'"]'));
+		if (!data.single_dir) {
+			menu_items.push(
+				{ label: 'New directory',
+					title: 'Create a new directory',
+					callback: function () {
+							cur_dir.mkdir('New directory', {free_name: true}).then(function (new_dir) {
+								return data.render_prom.then(function () {
+									start_rename(this_jqo.find('.lsfsfm_ent[data-inode="'+new_dir.inode()+'"]'));
+								});
+							}).catch(function (err) {
+								console.log(err);
+								console.log(err);
 							});
-						}).catch(function (err) {
-							console.log(err);
-							console.log(err);
-						});
-					},
-				}
-			);
+						},
+					}
+				);
+		}
 		menu_items.push(
 			{ label: 'Upload file',
 				title: 'Specify a file for upload to the directory',
@@ -391,6 +436,14 @@
 						},
 					}
 				);
+		}
+
+		if (data.menu_extra.length > 0) {
+			menu_items.push(
+				{ type: 'separator' }
+				);
+			for (let i = 0; i < data.menu_extra.length; i++)
+				menu_items.push(data.menu_extra[i]);
 		}
 
 		return menu.easymenu({

@@ -1,6 +1,6 @@
 {
   "name": "jquery.lostofsfileman",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "author": {
     "name": "Michael Wright",
@@ -39,9 +39,8 @@
   },
   "dependencies": {
     "jquery": "^3.2.1",
-    "jquery.easymenu": "^1.0.0",
-    "lostofs": "^1.0.2",
-    "pouchdb": "^6.3.4"
+    "jquery.easymenu": "^1.0.1",
+    "lostofs": "^1.0.2"
   },
   "repository": {
     "type": "git",
