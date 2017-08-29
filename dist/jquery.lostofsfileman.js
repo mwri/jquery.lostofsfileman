@@ -1,4 +1,4 @@
-// Package: jquery.lostofsfileman v1.0.1 (built 2017-08-25 19:46:56)
+// Package: jquery.lostofsfileman v1.0.2 (built 2017-08-29 18:03:16)
 // Copyright: (C) 2017 Michael Wright <mjw@methodanalysis.com>
 // License: MIT
 
@@ -119,12 +119,12 @@
 
 		},
 
-		new_file: function (data, name, content) {
+		new_file: function (data, name, content, options) {
 
 			return data.fs.get(data.dir_path).then(function (cur_dir) {
 				if (typeof content === 'undefined')
 					content = '';
-				return cur_dir.mkfile(name, content).then(function (new_file) {
+				return cur_dir.mkfile(name, content, options).then(function (new_file) {
 					return data.render_prom.then(function () {
 						return new_file;
 					});
