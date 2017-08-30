@@ -107,6 +107,10 @@ fm.lostofsfileman('rendered').then(function () {
 });
 ```
 
+## Events
+
+The 'rendered' event is emitted when ever the plugin finishes rerendering.
+
 ## Build
 
 run `npm install` to install the dev/build and demo dependencies, and
