@@ -64,10 +64,6 @@ module.exports = function(grunt) {
 			},
 		},
 
-		webpack: {
-			lostofs: require('./lostofs_webpack.config'),
-		},
-
 		watch: {
 			full: {
 				options: {
@@ -93,7 +89,6 @@ module.exports = function(grunt) {
 
 		clean: [
 			'node_modules',
-			'demo/lostofs_webpack_bundle.js',
 		],
 
 		gitstatus: {
@@ -114,7 +109,6 @@ module.exports = function(grunt) {
 		'concat',
 		'babel',
 		'uglify',
-		'webpack',
 		]);
 
 	grunt.registerTask('default', ['build']);
