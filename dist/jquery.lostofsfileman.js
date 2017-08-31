@@ -1,4 +1,4 @@
-// Package: jquery.lostofsfileman v1.0.2 (built 2017-08-29 18:03:16)
+// Package: jquery.lostofsfileman v1.0.3 (built 2017-08-31 16:56:06)
 // Copyright: (C) 2017 Michael Wright <mjw@methodanalysis.com>
 // License: MIT
 
@@ -263,7 +263,7 @@
 								if (typeof data.file_choose === 'undefined')
 									data_download(a.get(0), ent, $(a).attr('download'));
 								else
-									data.file_choose(ent);
+									data.file_choose(ent, cur_dir, ent_name);
 								return true;
 							}).catch(function (err) {
 								console.log(err);
@@ -359,6 +359,8 @@
 
 			});
 
+		}).then(() => {
+			this_jqo.trigger('rendered');
 		}).catch(function (err) {
 			console.log(err);
 			throw err;
