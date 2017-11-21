@@ -1,4 +1,4 @@
-// Package: jquery.lostofsfileman v1.0.4 (built 2017-11-21 13:11:09)
+// Package: jquery.lostofsfileman v1.0.5 (built 2017-11-21 13:19:37)
 // Copyright: (C) 2017 Michael Wright <mjw@methodanalysis.com>
 // License: MIT
 
