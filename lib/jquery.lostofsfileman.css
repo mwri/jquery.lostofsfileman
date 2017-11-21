@@ -34,7 +34,6 @@
 }
 
 .lsfsfm_fileman .lsfsfm_dir_entlist tbody {
-	padding: 0.25em;
 	display: block;
 }
 
@@ -51,14 +50,16 @@
 
 .lsfsfm_fileman .lsfsfm_dir_icon {
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4QUJFhITQMVMsgAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAADxSURBVEjH7ZYxSgNBAEXfH4Mk9qlsrKz3AGK5t7G0yAm2sMxtrG0FscsB9AoJGOfb7JBxCXET1tViPgzMDMP89z8MjGyTJGm36CHbZ0DMtgQcuiN0zqMuwPL+spf53cMbwJPt2z2mAhLcObBt53Ef0UnpW9AbSVGSOyNK+pD0KWmdzd9zz7yBa0mrvulPVdsatkNqLQBXklaMoBRQ0mvegCTFPulTgoG0AaaTY+t7eVwMBTCt6ubHZ/NNA5oDUNUNk9+4+BgF/lgFoAAUgAJQAP4FwKaqm9GNk2ewPQOex4RIXrbn2Mb2RfsvGG3YntvmC3MHfRNhKvcIAAAAAElFTkSuQmCC);
-	display: block;
+	display:         block;
+	margin:          0.1em;
 	background-size: cover;
-	width: 1.6em;
-	height: 1.2em;
+	width:           1.6em;
+	height:          1.2em;
 }
 
 .lsfsfm_fileman .lsfsfm_ent_icon {
 	display:          block;
+	margin:           0.1em;
 	background-size:  cover;
 	width:            1.6em;
 	height:           1.2em;
