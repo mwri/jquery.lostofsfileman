@@ -28,7 +28,7 @@
   "scripts": {
     "test": "grunt test"
   },
-  "main": "dist/jquery.lostofs-fileman.js",
+  "main": "dist/jquery.lostofsfileman.js",
   "directories": {
     "lib": "lib",
     "test": "test"
