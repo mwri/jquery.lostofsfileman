@@ -1,4 +1,4 @@
-// Package: jquery.lostofsfileman v1.0.5 (built 2017-11-21 13:19:37)
+// Package: jquery.lostofsfileman v1.0.6 (built 2018-02-13 21:59:14)
 // Copyright: (C) 2017 Michael Wright <mjw@methodanalysis.com>
 // License: MIT
 
@@ -83,15 +83,15 @@
 
 					render_dir(this_jqo, data, params);
 
-					fs.on('create', function (dir_ent, ent_name, ent) {
+					fs.on('create', function (dir_ent, _ent_name, _ent) {
 						if (dir_ent.inode() !== data.inode)
 							return;
 						render_dir(this_jqo, data, params);
-					}).on('move', function (src_dir_ent, old_name, dst_dir_ent, new_name, new_path) {
+					}).on('move', function (src_dir_ent, _old_name, dst_dir_ent, _new_name, _new_path) {
 						if (src_dir_ent.inode() !== data.inode && dst_dir_ent.inode() !== data.inode)
 							return;
 						render_dir(this_jqo, data, params);
-					}).on('remove', function (dir_ent, name) {
+					}).on('remove', function (dir_ent, _name) {
 						if (dir_ent.inode() !== data.inode)
 							return;
 						render_dir(this_jqo, data, params);
@@ -179,7 +179,7 @@
 					let file = files[0];
 					let filename = file.name;
 					let reader = new FileReader();
-					reader.onload = (function(theFile) {
+					reader.onload = (function(_file) {
 						return function(e) {
 							cur_dir.mkfile(
 								filename,
@@ -217,7 +217,7 @@
 					let ent = ent_ls[i][1];
 					let icon_class = ent.type() === 'dir' ? 'lsfsfm_dir_icon' : 'lsfsfm_ent_icon';
 					if (ent.type() === 'file' && ent.mime_type() !== undefined)
-						icon_class += ' lsfsfm_'+ent.mime_type().replace(/[\/-]/g, '_');
+						icon_class += ' lsfsfm_'+ent.mime_type().replace(/[/-]/g, '_');
 					let tr = $('<tr class="lsfsfm_ent" draggable="true" data-inode="'+ent.inode()+'" data-entname="'+ent_name+'"/>');
 					tbody.append(tr);
 					let td1 = $('<td/>');
@@ -267,16 +267,17 @@
 								return true;
 							}).catch(function (err) {
 								console.log(err);
+								alert('file select failed: '+err);
 							});
 							ev.preventDefault();
 							ev.stopPropagation();
 							return false;
 						});
 					} else {
-						tr.on('dblclick', function (ev) { // jshint ignore:line
+						tr.on('dblclick', function (_ev) { // jshint ignore:line
 							if (ent_name === '..') {
 								if (data.dir_path !== '/') {
-									let match = /^(.*)\/[^\/]+$/.exec(data.dir_path);
+									let match = /^(.*)\/[^/]+$/.exec(data.dir_path);
 									if (match) {
 										data.dir_path = match[1] === '' ? '/' : match[1];
 										fs.get(data.dir_path).then(function(new_dir) {
@@ -335,7 +336,7 @@
 											}
 									).catch(function (err) {
 										console.log(err);
-										alert(err);
+										alert('create file failed: '+err);
 									});
 								};
 								reader.readAsArrayBuffer(files[i]);
@@ -346,12 +347,11 @@
 							let dragged_dir_path = $('.lsfsfm_dragging')
 								.closest('.lsfsfm_dir_container')
 								.attr('data-dir-path');
-							let dragged_ent_path = dragged_dir_path+'/'+dragged_ent_name;
 							fs.get(dragged_dir_path).then(function(dragged_dir_ent) {
 								return dragged_dir_ent.move(dragged_ent_name, dir_path+'/'+dragged_ent_name);
 							}).catch(function (err) {
 								console.log(err);
-								alert(err);
+								alert('move file failed: '+err);
 							});
 						}
 						return false;
@@ -416,7 +416,7 @@
 					callback: function () {
 							cur_dir.remove(ent_name).catch(function (err) {
 								console.log(err);
-								alert(err);
+								alert('remove file failed: '+err);
 							});
 						},
 					}
@@ -495,7 +495,7 @@
 				entname_span.attr('data-entname', old_name);
 				entname_span.text(old_name);
 				console.log(err);
-				alert('rename failed: '+err);
+				alert('move file failed: '+err);
 			});
 		}
 
