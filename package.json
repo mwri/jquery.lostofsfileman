@@ -9,6 +9,7 @@
   "description": "jQuery file manager for lostofs (local storage filesystem)",
   "devDependencies": {
     "babel-preset-es2015": "^6.24.1",
+    "eslint": "^4.17.0",
     "grunt": "^1.0.1",
     "grunt-babel": "^6.0.0",
     "grunt-cli": "^1.2.0",
@@ -17,11 +18,12 @@
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-uglify": "^3.0.1",
     "grunt-contrib-watch": "^1.0.0",
+    "grunt-eslint": "^20.1.0",
     "grunt-git": "^1.0.6",
     "http-server": "^0.10.0",
     "load-grunt-tasks": "^3.5.2"
   },
-  "url": "https://github.com/mwri/lostofs-fileman",
+  "url": "https://github.com/mwri/jquery.lostofsfileman",
   "os": [
     "linux"
   ],
@@ -40,7 +42,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mwri/lostofs-fileman.git"
+    "url": "git+https://github.com/mwri/jquery.lostofsfileman.git"
   },
   "keywords": [
     "file",
@@ -51,7 +53,7 @@
     "jquery"
   ],
   "bugs": {
-    "url": "https://github.com/mwri/lostofs-fileman/issues"
+    "url": "https://github.com/mwri/jquery.lostofsfileman/issues"
   },
-  "homepage": "https://github.com/mwri/lostofs-fileman#readme"
+  "homepage": "https://github.com/mwri/jquery.lostofsfileman#readme"
 }

@@ -102,10 +102,15 @@ module.exports = function(grunt) {
 			},
 		},
 
+		eslint: {
+			target: ['lib'],
+		},
+
 	});
 
 	grunt.registerTask('build', [
 		'jshint',
+		'eslint',
 		'concat',
 		'babel',
 		'uglify',
